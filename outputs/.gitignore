@@ -1,0 +1,5 @@
+# Ignore all files
+# No outputs are version controlled
+# They should should be built from source, and will be exported here
+*
+!.gitignore

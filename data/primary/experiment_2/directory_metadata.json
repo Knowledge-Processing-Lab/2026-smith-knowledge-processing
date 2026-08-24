@@ -1,0 +1,360 @@
+{
+    "name": "Experiment 2 Primary Data",
+    "variableMeasured": [
+        {
+            "@type": "PropertyValue",
+            "name": "Condition",
+            "description": "Statement type presented on a given trial.",
+            "valuePattern": "Reality|Knowledge|Belief"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "TrueFalse",
+            "description": "Veridical truth of the statement given the scenario, i.e. the correct response.",
+            "valuePattern": "TRUE|FALSE"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Scenario",
+            "description": "Epistemic structure of the scene in the image. TB/FB = true/false belief; K = knowledge; Ig = ignorance; B = barrier.",
+            "valuePattern": "TB-K|TB-K-B|TB-Ig|FB-Ig"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "StimType",
+            "description": "Layout of the scene in left-to-right order; T = target (cube), D = distractor (pyramid), B/NB = barrier present/absent. Position of B marks where the barrier sits.",
+            "valuePattern": "D_B|D_NB|DD_B|DD_NB|TD_B|TD_NB|TT_B|TT_NB|T_NB|D_B_D|D_B_T|T_B_T"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Stimulus",
+            "description": "Relative path to the trial image. Associated files can be found under /materials."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Statement",
+            "description": "Text of the statement presented on a given trial, exactly as displayed to the participant."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "StatementNum",
+            "description": "Number of cubes asserted in the statement.",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "CorAnsEven",
+            "description": "Correct response key for even-numbered participants (key-mapping counterbalancing).",
+            "valuePattern": "b|h"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "CorAnsOdd",
+            "description": "Correct response key for odd-numbered participants (key-mapping counterbalancing).",
+            "valuePattern": "b|h"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "TotalObjects",
+            "description": "Total number of objects (cubes & pyramids) present on the table in the image.",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "TotalDistractors",
+            "description": "Total number of pyramids (distractors) present on the table.",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "TotalTargets",
+            "description": "Total number of cubes (target objects) present on the table in the image.",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "VisibleObjects",
+            "description": "Total number of objects visible to the agent (not occluded by the barrier).",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "VisibleDistractors",
+            "description": "Number of pyramids (distractors) visible to the agent.",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "VisibleTargets",
+            "description": "Number of cubes (target objects) visible to the agent.",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "HiddenObjects",
+            "description": "Total number of objects not visible to the agent (occluded by the barrier).",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "HiddenDistractors",
+            "description": "Number of pyramids (distractors) occluded from the agent.",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "HiddenTargets",
+            "description": "Number of cubes (target objects) occluded from the agent.",
+            "minValue": 0,
+            "maxValue": 2
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Barrier",
+            "description": "Whether an occluding barrier was present in the scene (B) or absent (NB).",
+            "valuePattern": "B|NB"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "WhyFalse",
+            "description": "Reason the statement is false: the proposition is false, or it is true but the agent lacks the relevant knowledge or belief. '-' for true trials.",
+            "valuePattern": "PropFalse|PropTrueNoKnowledge|PropTrueNoBelief|-"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpTrial.thisRepN",
+            "description": "PsychoPy indexing - always 0 in this case as there was only 1 repeat."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpTrial.thisTrialN",
+            "description": "PsychoPy reported zero-indexed trial number - identical to ExpTrial.thisN."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpTrial.thisN",
+            "description": "Identical to ExpTrial.thisTrialN - redundant column from PsychoPy."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpTrial.thisIndex",
+            "description": "Row index of the condition file supplying the trials parameters. Condition file can be found under /materials."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpIntroText.started",
+            "description": "PsychoPy timing data. Onset time of the instruction text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpIntroPressSPACEText.started",
+            "description": "PsychoPy timing data. Onset time of the instruction continue prompt.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpIntroPressSPACE.started",
+            "description": "PsychoPy timing data. Onset time of the instruction keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpIntroPressSPACE.keys",
+            "description": "Key pressed to advance past the instructions.",
+            "valuePattern": "space"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpIntroPressSPACE.rt",
+            "description": "Time taken to advance past the instructions, from onset of the instruction keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpISI.started",
+            "description": "PsychoPy timing data. Onset time of the inter-stimulus interval preceding the trial, relative to the start of the routine.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpPrimerText.started",
+            "description": "PsychoPy timing data. Onset time of the primer text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpPrimerText.stopped",
+            "description": "PsychoPy timing data. Offset time of the primer text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpText.started",
+            "description": "PsychoPy timing data. Onset time of the statement.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpImagePrimer.started",
+            "description": "PsychoPy timing data. Onset time of the image primer.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpImagePrimer.stopped",
+            "description": "PsychoPy timing data. Offset time of the image primer.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpImage.started",
+            "description": "PsychoPy timing data. Onset time of the trial image.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpResponse.started",
+            "description": "PsychoPy timing data. Onset time of the response keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpResponse.keys",
+            "description": "Participant response - key pressed in response to the statement-image pair.",
+            "valuePattern": "b|h"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpResponse.corr",
+            "description": "Response accuracy: 1 = correct, 0 = incorrect.",
+            "valuePattern": "0|1"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpResponse.rt",
+            "description": "Primary dependent variable - response time, measured from onset of the trial image.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "BreakTextPrompt.started",
+            "description": "PsychoPy timing data. Onset time of the break prompt text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "BreakTextPrompt.stopped",
+            "description": "PsychoPy timing data. Offset time of the break prompt text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "BreakTextKeyResponse.started",
+            "description": "PsychoPy timing data. Onset time of the break keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "BreakTextKeyResponse.stopped",
+            "description": "PsychoPy timing data. Offset time of the break keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "BreakTextKeyResponse.keys",
+            "description": "Key pressed to end the break; 'NA' on trials with no break.",
+            "valuePattern": "space|NA"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "BreakTextKeyResponse.rt",
+            "description": "Time taken to end the break, from onset of the break keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpEndText.started",
+            "description": "PsychoPy timing data. Onset time of the end-of-experiment text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpEndPressSPACE.started",
+            "description": "PsychoPy timing data. Onset time of the end-of-experiment keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpEndPressSPACE.keys",
+            "description": "Key pressed to exit the experiment.",
+            "valuePattern": "space"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpEndPressSPACE.rt",
+            "description": "Time taken to exit the experiment, from onset of the end-of-experiment keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpEndPressSPACE.rt",
+            "description": "Time taken to exit the experiment, from onset of the end-of-experiment keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpEndText.stopped",
+            "description": "PsychoPy timing data. Offset time of the end-of-experiment text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "ExpEndPressSPACE.stopped",
+            "description": "PsychoPy timing data. Offset time of the end-of-experiment keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "participant",
+            "description": "Anonymised participant number, zero-padded to three digits."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "session",
+            "description": "Testing session number - always 001.",
+            "valuePattern": "001"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "date",
+            "description": "Date and time the session was started.",
+            "valuePattern": "YYYY-MM-DD_HHhMM.SS.sss"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "expName",
+            "description": "Name of the associated PsychoPy experiment file."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "psychopyVersion",
+            "description": "Version of PsychoPy used to run the experiment."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "frameRate",
+            "description": "Measured refresh rate of the display at the start of the session as captured by PsychoPy.",
+            "unitText": "Hz"
+        }
+    ]
+}

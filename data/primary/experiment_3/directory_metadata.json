@@ -1,0 +1,396 @@
+{
+    "name": "Experiment 3 Primary Data",
+    "variableMeasured": [
+        {
+            "@type": "PropertyValue",
+            "name": "Statement_Type",
+            "description": "Statement type presented on a given trial.",
+            "valuePattern": "Reality|Knowledge|Belief"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Reg_Neg",
+            "description": "Whether the statement was phrased regularly (Reg) or negated (Neg), e.g. 'Adam KNOWS' vs 'Adam does NOT KNOW'.",
+            "valuePattern": "Reg|Neg"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Truth_Value",
+            "description": "Veridical truth of the statement given the scenario, i.e. the correct response.",
+            "valuePattern": "TRUE|FALSE"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Experimental",
+            "description": "Whether the trial belongs to the critical experimental set (Y) or is a filler trial (N).",
+            "valuePattern": "Y|N"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Scenario",
+            "description": "Epistemic structure of the scene in the image. TB/FB = true/false belief; K = knowledge; Ig = ignorance; B/NB = barrier present/absent.",
+            "valuePattern": "TB-K|TB-K-B|TB-Ig|FB-Ig|NB-TB-K"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Stimuli_Type",
+            "description": "Layout of the scene in left-to-right order; T = target (cube), D = distractor (pyramid), B/NB = barrier present/absent. Position of B marks where the barrier sits.",
+            "valuePattern": "B_T|B_TT|D_B|D_NB|DD_B|DD_NB|DT_NB|TD_B|TT_B|TT_NB|T_NB|D_B_T|T_B_T"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Stimulus",
+            "description": "Relative path to the trial image. Associated files can be found under /materials."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Statement",
+            "description": "Text of the statement presented on a given trial, exactly as displayed to the participant."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Statement_Number",
+            "description": "Number of cubes asserted in the statement, as written.",
+            "valuePattern": "Zero|One|Two"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "CorAnsOdd",
+            "description": "Correct response key for odd-numbered participants (key-mapping counterbalancing).",
+            "valuePattern": "b|h"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "CorAnsEven",
+            "description": "Correct response key for even-numbered participants (key-mapping counterbalancing).",
+            "valuePattern": "b|h"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Barrier",
+            "description": "Redundant column from the condition file. Despite its name it does not encode barrier presence, but is identical to Reg_Neg (Y = negated statement, N = regular). Barrier presence is recoverable from Stimuli_Type.",
+            "valuePattern": "Y|N"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Why_False",
+            "description": "Reason the statement is false: the proposition is false, or it is true but the agent lacks the relevant knowledge. '-' for true trials.",
+            "valuePattern": "PropFalse|PropTrueNoKnow|-"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Check_Trial",
+            "description": "Whether the trial was an attention-check trial (Y) or not (N).",
+            "valuePattern": "Y|N"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Trial.thisRepN",
+            "description": "PsychoPy indexing - always 0 in this case as there was only 1 repeat."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Trial.thisTrialN",
+            "description": "PsychoPy reported zero-indexed trial number - identical to Exp_Trial.thisN."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Trial.thisN",
+            "description": "Identical to Exp_Trial.thisTrialN - redundant column from PsychoPy."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Trial.thisIndex",
+            "description": "Row index of the condition file supplying the trials parameters. Condition file can be found under /materials."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "thisRow.t",
+            "description": "PsychoPy timing data. Time at which the trials data row was written.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "notes",
+            "description": "Experimenter notes field, empty throughout."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Intro.started",
+            "description": "PsychoPy timing data. Onset time of the instruction routine.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Intro_Text.started",
+            "description": "PsychoPy timing data. Onset time of the instruction text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Intro_Press_SPACE_Text.started",
+            "description": "PsychoPy timing data. Onset time of the instruction continue prompt.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Intro_Press_SPACE.started",
+            "description": "PsychoPy timing data. Onset time of the instruction keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Intro.stopped",
+            "description": "PsychoPy timing data. Offset time of the instruction routine.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Intro_Press_SPACE.keys",
+            "description": "Key pressed to advance past the instructions.",
+            "valuePattern": "space"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Intro_Press_SPACE.rt",
+            "description": "Time taken to advance past the instructions, from onset of the instruction keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Intro_Press_SPACE.duration",
+            "description": "PsychoPy keypress duration - not recorded, empty throughout.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine.started",
+            "description": "PsychoPy timing data. Onset time of the trial routine.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_ISI.started",
+            "description": "PsychoPy timing data. Onset time of the inter-stimulus interval preceding the trial, relative to the start of the routine.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Statement_Primer.started",
+            "description": "PsychoPy timing data. Onset time of the statement primer.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Statement_Primer.stopped",
+            "description": "PsychoPy timing data. Offset time of the statement primer.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Statement.started",
+            "description": "PsychoPy timing data. Onset time of the statement.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Image_Primer.started",
+            "description": "PsychoPy timing data. Onset time of the image primer.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Image_Primer.stopped",
+            "description": "PsychoPy timing data. Offset time of the image primer.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Image.started",
+            "description": "PsychoPy timing data. Onset time of the trial image.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Key_Resp.started",
+            "description": "PsychoPy timing data. Onset time of the response keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine.stopped",
+            "description": "PsychoPy timing data. Offset time of the trial routine.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Key_Resp.keys",
+            "description": "Participant response - key pressed in response to the statement-image pair.",
+            "valuePattern": "b|h"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Key_Resp.corr",
+            "description": "Response accuracy: 1 = correct, 0 = incorrect.",
+            "valuePattern": "0|1"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Key_Resp.rt",
+            "description": "Primary dependent variable - response time, measured from onset of the trial image.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_Routine_Key_Resp.duration",
+            "description": "Redundant column from PsychoPy - empty throughout."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Break.started",
+            "description": "PsychoPy timing data. Onset time of the break routine.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Break_Text.started",
+            "description": "PsychoPy timing data. Onset time of the break prompt text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Break_Text.stopped",
+            "description": "PsychoPy timing data. Offset time of the break prompt text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Break_Key_Resp.started",
+            "description": "PsychoPy timing data. Onset time of the break keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Break_Key_Resp.stopped",
+            "description": "PsychoPy timing data. Offset time of the break keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Break.stopped",
+            "description": "PsychoPy timing data. Offset time of the break routine.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Break_Key_Resp.keys",
+            "description": "Key pressed to end the break; 'NA' on trials with no break.",
+            "valuePattern": "space|NA"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Break_Key_Resp.rt",
+            "description": "Time taken to end the break, from onset of the break keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Break_Key_Resp.duration",
+            "description": "PsychoPy keypress duration - not recorded, empty throughout.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_End.started",
+            "description": "PsychoPy timing data. Onset time of the end-of-experiment routine.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_End_Text.started",
+            "description": "PsychoPy timing data. Onset time of the end-of-experiment text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_End_Key_Resp.started",
+            "description": "PsychoPy timing data. Onset time of the end-of-experiment keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_End.stopped",
+            "description": "PsychoPy timing data. Offset time of the end-of-experiment routine.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_End_Key_Resp.keys",
+            "description": "Key pressed to exit the experiment.",
+            "valuePattern": "space"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_End_Key_Resp.rt",
+            "description": "Time taken to exit the experiment, from onset of the end-of-experiment keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_End_Key_Resp.duration",
+            "description": "PsychoPy keypress duration - not recorded, empty throughout.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_End_Text.stopped",
+            "description": "PsychoPy timing data. Offset time of the end-of-experiment text.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "Exp_End_Key_Resp.stopped",
+            "description": "PsychoPy timing data. Offset time of the end-of-experiment keyboard component.",
+            "unitText": "seconds"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "participant",
+            "description": "Anonymised participant number, zero-padded to three digits."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "session",
+            "description": "Testing session number - always 001.",
+            "valuePattern": "001"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "date",
+            "description": "Date and time the session was started.",
+            "valuePattern": "YYYY-MM-DD_HHhMM.SS.sss"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "expName",
+            "description": "Name of the associated PsychoPy experiment file."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "psychopyVersion",
+            "description": "Version of PsychoPy used to run the experiment."
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "frameRate",
+            "description": "Measured refresh rate of the display at the start of the session as captured by PsychoPy - not recorded, empty throughout.",
+            "unitText": "Hz"
+        },
+        {
+            "@type": "PropertyValue",
+            "name": "expStart",
+            "description": "Refer to 'date' column. Extended date, time and UTC offset at which the experiment was launched.",
+            "valuePattern": "YYYY-MM-DD HHhMM.SS.ssssss ±HHMM"
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+# Ignore all files
+# All processed data should be built from source, and will be exported here
+*
+!.gitignore
