@@ -2,3 +2,4 @@
 # All processed data should be built from source, and will be exported here
 *
 !.gitignore
+!directory_metadata.json
