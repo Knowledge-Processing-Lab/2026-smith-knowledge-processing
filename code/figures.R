@@ -22,6 +22,7 @@ library(here)
 library(ggdist)
 library(cowplot)
 library(magick)
+library(svglite)
 
 here::i_am("code/figures.R")
 
