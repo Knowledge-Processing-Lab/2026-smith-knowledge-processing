@@ -36,10 +36,20 @@ paths <- c(
   E2 = "outputs/exp2_results.rds",
   E3 = "outputs/exp3_results.rds"
 )
+
 trial_data <- map(paths, \(p) read_rds(here(p))$rt_data)
 trial_data$E2s <- read_rds(here(
   "outputs/exp2_supplementary_results.rds"
 ))$S1$rt_data
+
+trial_data$E3 <- trial_data$E3 |>
+  mutate(
+    statement_type = fct_recode(
+      statement_type,
+      `Negated Knowledge` = "Knowledge",
+      `Negated Belief` = "Belief"
+    )
+  )
 
 # Aggregate trial data into one dataframe
 all_trial_data <- list_rbind(trial_data, names_to = "experiment")
@@ -68,7 +78,7 @@ summary_data <- trial_data |>
 
 
 # Setting Theme Elements -------------------------------------------------
-base_pt <- 7
+base_pt <- 12
 theme_set(
   theme_classic(base_size = base_pt) +
     theme(
@@ -96,7 +106,13 @@ create_plot <- function(trial_data, summary_data) {
     stat_slab(slab_alpha = 1, scale = 0.5) +
     scale_side_mirrored(start = "left") +
     scale_fill_manual(
-      values = c(Reality = "#386CB0", Knowledge = "#7FC97F", Belief = "#BEAED4")
+      values = c(
+        Reality = "#386CB0",
+        Knowledge = "#7FC97F",
+        `Negated Knowledge` = "#7FC97F",
+        Belief = "#BEAED4",
+        `Negated Belief` = "#BEAED4"
+      )
     ) +
 
     # Slopegraph
@@ -166,29 +182,29 @@ k_fig <- create_plot(
 
 # Top left - Statements
 statements <- tribble(
-  ~label       , ~text                           , ~y    ,
-  "Reality:"   , "In REALITY, there is ONE cube" , 0.5   ,
-  "Knowledge:" , "Adam KNOWS there is ONE cube"  , 0.375 ,
-  "Belief:"    , "Adam THINKS there is ONE cube" , 0.25
+  ~label       , ~text                           , ~y  ,
+  "Reality:"   , "In REALITY, there is ONE cube" , 0.6 ,
+  "Knowledge:" , "Adam KNOWS there is ONE cube"  , 0.4 ,
+  "Belief:"    , "Adam THINKS there is ONE cube" , 0.2
 )
 
 text_panel <- ggplot(statements) +
   annotate(
     "text",
-    x = 0.35,
-    y = 0.65,
-    label = "Statements (Experiments 1 & 2)",
-    hjust = 0,
+    x = 0.5,
+    y = 0.8,
+    label = "Experiments 1 & 2 (Correct answer is 'true')",
+    hjust = 0.5,
     fontface = "bold",
     size = base_pt / .pt
   ) +
   geom_text(
-    aes(x = 0.2, y = y, label = label),
-    hjust = 0,
+    aes(x = 0.25, y = y, label = label),
+    hjust = 1,
     size = base_pt / .pt
   ) +
   geom_text(
-    aes(x = 0.35, y = y, label = text),
+    aes(x = 0.27, y = y, label = text),
     hjust = 0,
     size = base_pt / .pt
   ) +
@@ -201,8 +217,8 @@ text_panel <- ggplot(statements) +
 stimuli_example <- ggdraw() +
   draw_image(
     image_read(here("materials/TB-K-NB.png")),
-    x = -.15,
-    y = 0.05,
+    x = 0,
+    y = 0,
     width = 1,
     height = 1
   )
@@ -224,53 +240,52 @@ ggsave(
 
 # Bottom Panel - Graphs
 
-ig_fig <- create_plot(
-  all_trial_data |> filter(experiment %in% c("E2s", "E3")),
-  summary_data |> filter(experiment %in% c("E2s", "E3"))
+ig_fig_E2 <- create_plot(
+  all_trial_data |> filter(experiment %in% c("E2s")),
+  summary_data |> filter(experiment %in% c("E2s"))
+)
+
+ig_fig_E3 <- create_plot(
+  all_trial_data |> filter(experiment %in% c("E3")),
+  summary_data |> filter(experiment %in% c("E3"))
 )
 
 # Top left - Statements
 statements <- tribble(
-  ~block , ~header                     , ~label               , ~text                                     ,
-       1 , 'Statements (Experiment 2)' , "Knowledge:"         , "Adam KNOWS there are TWO cubes"          ,
-       1 , 'Statements (Experiment 2)' , "Belief:"            , "Adam THINKS there are TWO cubes"         ,
-       2 , 'Statements (Experiment 3)' , "Negated Knowledge:" , "Adam does NOT KNOW there are TWO cubes"  ,
-       2 , 'Statements (Experiment 3)' , "Negated Belief:"    , "Adam does NOT THINK there are TWO cubes"
+  ~label       , ~text                                     , ~y   ,
+  "Knowledge:" , "Adam KNOWS there are TWO cubes"          , 0.8  ,
+  "Belief:"    , "Adam THINKS there are TWO cubes"         , 0.65 ,
+  "Negated K:" , "Adam does NOT KNOW there are TWO cubes"  , 0.25 ,
+  "Negated B:" , "Adam does NOT THINK there are TWO cubes" , 0.1
 )
 
-# layout constants
-line_gap <- 0.13 # between statement rows
-block_gap <- 0.12 # extra space above each header
-head_gap <- 0.10 # header to first statement
-
-layout <- statements |>
-  mutate(
-    row = row_number(),
-    new_block = block != lag(block, default = first(block)),
-    y = .8 - cumsum(line_gap + block_gap * new_block)
-  )
-
-headers <- layout |>
-  summarise(y = max(y) + head_gap, .by = c(block, header))
-
-text_panel <- ggplot() +
-  geom_text(
-    data = headers,
-    aes(x = 0.25, y = y, label = header),
-    hjust = 0,
+text_panel <- ggplot(statements) +
+  annotate(
+    "text",
+    x = 0.5,
+    y = 0.95,
+    label = "Experiment 2 (Correct answer is 'false')",
+    hjust = 0.5,
     fontface = "bold",
     size = base_pt / .pt
   ) +
   geom_text(
-    data = layout,
-    aes(x = 0.1, y = y, label = label),
-    hjust = 0,
+    aes(x = 0.2, y = y, label = label),
+    hjust = 1,
     size = base_pt / .pt
   ) +
   geom_text(
-    data = layout,
-    aes(x = 0.35, y = y, label = text),
+    aes(x = 0.22, y = y, label = text),
     hjust = 0,
+    size = base_pt / .pt
+  ) +
+  annotate(
+    "text",
+    x = 0.5,
+    y = 0.4,
+    label = "Experiment 3 (Correct answer is 'true')",
+    hjust = 0.5,
+    fontface = "bold",
     size = base_pt / .pt
   ) +
   scale_x_continuous(limits = c(0, 1), expand = c(0, 0)) +
@@ -281,15 +296,16 @@ text_panel <- ggplot() +
 stimuli_example <- ggdraw() +
   draw_image(
     image_read(here("materials/FB-Ig.png")),
-    x = -.15,
-    y = 0.05,
+    x = .1,
+    y = 0,
     width = 1,
     height = 1
   )
 
 # Figure Assembly
 top <- plot_grid(text_panel, stimuli_example, nrow = 1, rel_widths = c(1.7, 1))
-final_ig <- plot_grid(top, ig_fig, ncol = 1, rel_heights = c(1, 2))
+bottom <- plot_grid(ig_fig_E2, ig_fig_E3, ncol = 2)
+final_ig <- plot_grid(top, bottom, ncol = 1, rel_heights = c(1, 2))
 
 ggsave(
   here("outputs/figures/fig3_multipanel_ignorance.svg"),
