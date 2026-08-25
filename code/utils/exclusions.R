@@ -1,8 +1,24 @@
+# INFO -------------------------------------------------------------------
+
+# PROJECT
+## Paper: Knowledge and Ignorance Processing is Faster than Belief Processing
+## Authors: Smith, A., Peney, T., Tidoni, E., O'Connor, R. J., & Riggs, K.
+
+# R Script
+## Purpose: This script contains function definitions for executing the trial/participant exclusion
+# logic. The basic premise is that all excluded data is kept as an attribute of the data-frame
+# for later access. These functions are called in the experiment analysis scripts.
+## Authors: Peney, T.
+
+# Setup ------------------------------------------------------------------
 library(tidyverse)
 
 # Helper Functions -------------------------------------------------------
-
-create_exclusion_log <- function(participants = NULL, reason = NULL, statistics = NULL) {
+create_exclusion_log <- function(
+  participants = NULL,
+  reason = NULL,
+  statistics = NULL
+) {
   tibble(p_id = participants, reason = reason, statistic = statistics)
 }
 
@@ -23,29 +39,29 @@ log_excluded_trials <- function(data_source, excluded_rows, reason) {
   return(data_source)
 }
 
-report_trial_count <- function(data, additional_message = NULL) {
-  cat(nrow(data), additional_message, "\n\n")
-  return(data)
-}
-
 report_exclusions <- function(data) {
   exc_pid <- attr(data, "excluded_participants")
   exc_trials <- attr(data, "excluded_trials")
-
-  print_reason_counts <- \(df) df |> count(reason) |> print()
-  print_reason_counts(exc_pid)
-  print_reason_counts(exc_trials)
 
   n_exc_trials <- exc_trials |> filter(!p_id %in% exc_pid$p_id) |> nrow()
   total_trials <- n_exc_trials + nrow(data)
   percent_kept <- 100 * (1 - n_exc_trials / total_trials)
 
-  message("Remaining participants contributed ", round(percent_kept, 1), "% trials")
-  return(data)
+  contribution <- paste(
+    "Remaining participants contributed",
+    round(percent_kept, 1),
+    "% trials"
+  )
+
+  list(
+    excluded_participants = exc_pid |> count(reason),
+    excluded_trials = exc_trials |> count(reason),
+    percent_contributed = contribution
+  )
 }
 
 restore_excluded_trials <- function(data) {
-  exc_trials <- attr(data, "excluded_trials") |> 
+  exc_trials <- attr(data, "excluded_trials") |>
     filter(p_id %in% data$p_id)
 
   bind_rows(data, exc_trials)
@@ -63,8 +79,8 @@ detect_outliers <- function(data, measure, z_threshold, .by = NULL) {
 # Participant Level Exclusions -------------------------------------------
 
 exclude_manual <- function(data, exclusion_log) {
-  data |> 
-    filter(!p_id %in% exclusion_log$p_id) |> 
+  data |>
+    filter(!p_id %in% exclusion_log$p_id) |>
     log_excluded_participants(exclusion_log)
 }
 
@@ -73,8 +89,8 @@ exclude_low_accuracy <- function(data, threshold) {
     summarise(overall_accuracy = mean(accuracy), .by = p_id) |>
     filter(overall_accuracy < threshold)
 
-  data |> 
-    filter(!p_id %in% exclusions$p_id) |> 
+  data |>
+    filter(!p_id %in% exclusions$p_id) |>
     log_excluded_participants(
       create_exclusion_log(
         participants = exclusions$p_id,
@@ -85,13 +101,13 @@ exclude_low_accuracy <- function(data, threshold) {
 }
 
 exclude_participant_accuracy_outliers <- function(data, z_threshold) {
-  exclusions <- data |> 
-    summarise(accuracy = mean(accuracy), .by = p_id) |> 
-    detect_outliers(accuracy, z_threshold = z_threshold) |> 
+  exclusions <- data |>
+    summarise(accuracy = mean(accuracy), .by = p_id) |>
+    detect_outliers(accuracy, z_threshold = z_threshold) |>
     filter(is_outlier == TRUE)
 
-  data |> 
-    filter(!p_id %in% exclusions$p_id) |> 
+  data |>
+    filter(!p_id %in% exclusions$p_id) |>
     log_excluded_participants(
       create_exclusion_log(
         participants = exclusions$p_id,
@@ -102,13 +118,13 @@ exclude_participant_accuracy_outliers <- function(data, z_threshold) {
 }
 
 exclude_participant_rt_outliers <- function(data, z_threshold) {
-    exclusions <- data |> 
-      summarise(rt = mean(rt), .by = p_id) |> 
-      detect_outliers(rt, z_threshold = z_threshold) |> 
-      filter(is_outlier)
+  exclusions <- data |>
+    summarise(rt = mean(rt), .by = p_id) |>
+    detect_outliers(rt, z_threshold = z_threshold) |>
+    filter(is_outlier)
 
-  data |> 
-    filter(!p_id %in% exclusions$p_id) |> 
+  data |>
+    filter(!p_id %in% exclusions$p_id) |>
     log_excluded_participants(
       create_exclusion_log(
         participants = exclusions$p_id,
@@ -119,21 +135,21 @@ exclude_participant_rt_outliers <- function(data, z_threshold) {
 }
 
 exclude_low_trial_count <- function(data, statement_types, threshold) {
-  exclusions <- data |> 
-    filter(statement_type %in% statement_types) |> 
-    count(p_id, statement_type) |> 
-    complete(p_id, statement_type = statement_types, fill = list(n = 0)) |> 
-    summarise(meets_threshold = all(n >= threshold), .by = p_id) |> 
+  exclusions <- data |>
+    filter(statement_type %in% statement_types) |>
+    count(p_id, statement_type) |>
+    complete(p_id, statement_type = statement_types, fill = list(n = 0)) |>
+    summarise(meets_threshold = all(n >= threshold), .by = p_id) |>
     filter(!meets_threshold)
 
-  data |> 
-    filter(!p_id %in% exclusions$p_id) |> 
+  data |>
+    filter(!p_id %in% exclusions$p_id) |>
     log_excluded_participants(
       create_exclusion_log(
         participants = exclusions$p_id,
         reason = "Low Trial Count"
       )
-    )  
+    )
 }
 
 # Trial Level Exclusions -------------------------------------------------

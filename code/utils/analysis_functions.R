@@ -1,5 +1,17 @@
+# INFO -------------------------------------------------------------------
+
+# PROJECT
+## Paper: Knowledge and Ignorance Processing is Faster than Belief Processing
+## Authors: Smith, A., Peney, T., Tidoni, E., O'Connor, R. J., & Riggs, K.
+
+# R Script
+## Purpose: This script contains several analysis functions used throughout the project.
+## Authors: Peney, T.
+
+# Setup ------------------------------------------------------------------
 library(tidyverse)
 
+# Function Definitions ---------------------------------------------------
 aggregate_mean <- function(data, measure, stat_func = mean, .by = p_id) {
   data |>
     summarise(
@@ -28,19 +40,4 @@ ttest_wrapper <- function(data, alternative, ...) {
     cohens_d,
     by = intersect(names(ttest), names(cohens_d))
   )
-}
-
-report_ttest <- function(res) {
-  print(glue::glue(
-    "{res$group1} + {res$group2} t({res$df}) = {abs(round(res$statistic, 2))}, p = {round(res$p, 3)}, d = {abs(round(res$effsize, 3))}"
-  ))
-  return(res)
-}
-
-report_rt_means <- function(rt_means, test_var = "statement_type") {
-  print(glue::glue(
-    "{rt_means[[test_var]]}- mean = {round(rt_means$mean_rt, 2)} s, \\ 
-    95% CI [{round(rt_means$lower_ci, 2)}, {round(rt_means$upper_ci, 2)}]"
-  ))
-  return(rt_means)
 }

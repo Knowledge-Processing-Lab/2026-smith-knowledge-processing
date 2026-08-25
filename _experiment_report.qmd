@@ -1,0 +1,149 @@
+---
+title: "Knowledge and Ignorance Processing is Faster than Belief Processing"
+subtitle: "Analysis Report - Experiments 1-3"
+author:
+ - name: Smith, A. 
+ - name: Peney, T.
+ - name: Tidoni, E.
+ - name: O'Connor, R. J.
+ - name: Riggs, K.
+analysis-author: Peney, T.
+date: today
+date-format: "YYYY-MM-DD"
+lang: en-GB
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    theme: cosmo
+    code-fold: true
+    code-tools: true
+    anchor-sections: true
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(gt)
+
+here::i_am("_experiment_report.qmd")
+```
+
+```{r}
+table_formatting <- function(gt_table){
+    gt_table |> 
+        tab_options(table.align = "left") |> 
+        fmt_number(decimals = 3, drop_trailing_zeros = TRUE) |> 
+        sub_small_vals(threshold = 0.001)
+}
+```
+
+# Experiment 1
+```{r}
+results <- read_rds(here("outputs/exp1_results.rds"))
+```
+
+## Exclusions
+```{r}
+results$exclusions
+```
+
+## Descriptives
+```{r}
+results$descriptives
+```
+
+## Confirmatory Analysis
+```{r}
+results$anova |> 
+    gt() |> tab_header(title = "Repeated Measures ANOVA") |> table_formatting()
+
+results$ttests |> 
+    gt() |> tab_header(title = "Pairwise Repeated Measures T-Tests") |> table_formatting()
+```
+
+# Experiment 2
+```{r}
+results <- read_rds(here("outputs/exp2_results.rds"))
+```
+
+## Exclusions
+```{r}
+results$exclusions
+```
+
+## Descriptives
+```{r}
+results$descriptives
+```
+
+## Confirmatory Analysis
+```{r}
+results$anova |> 
+    gt() |> tab_header(title = "Repeated Measures ANOVA") |> table_formatting()
+
+results$ttests |> 
+    gt() |> tab_header(title = "Pairwise Repeated Measures T-Tests") |> table_formatting()
+```
+
+# Experiment 3
+```{r}
+results <- read_rds(here("outputs/exp3_results.rds"))
+```
+
+## Exclusions
+```{r}
+results$exclusions
+```
+
+## Descriptives
+```{r}
+results$descriptives
+```
+
+## Confirmatory Analysis
+```{r}
+results$ttests |> 
+    gt() |> tab_header(title = "Pairwise Repeated Measures T-Tests") |> 
+    table_formatting()
+```
+
+# Supplementary Analysis
+## Experiment 2
+```{r}
+results <- read_rds(here("outputs/exp2_supplementary_results.rds"))
+```
+
+### Supplementary Test 1 - Reported in main text
+Comparing RT between Knowledge statements that are False and Belief statements that are False. FB-Ig Scenario trials.
+```{r}
+results$S1$rt
+results$S1$ttest |> gt() |> table_formatting()
+```
+
+### Supplementary Test 2
+Comparing RT between Knowledge statements that are False and Belief statements that are True. FB-Ig Scenario trials.
+```{r}
+results$S2$rt
+results$S2$ttest |> gt() |> table_formatting()
+```
+
+### Supplementary Test 3
+Comparing RT between (a) mean RT for False K statements / mean RT for False R statements (b) mean RT for True B statements / mean RT for True R statements.
+```{r}
+results$S3$rt
+results$S3$ttest |> gt() |> table_formatting()
+```
+
+### Supplementary Test 4
+Check that the number of cubes referred to in the statement does not produce a difference in RTs. No Barrier: TB-K scenario trials only.
+```{r}
+results$S4$rt
+results$S4$ttest |> gt() |> table_formatting()
+```

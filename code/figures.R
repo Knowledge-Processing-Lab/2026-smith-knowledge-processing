@@ -1,3 +1,22 @@
+# INFO -------------------------------------------------------------------
+
+# PROJECT
+## Paper: Knowledge and Ignorance Processing is Faster than Belief Processing
+## Authors: Smith, A., Peney, T., Tidoni, E., O'Connor, R. J., & Riggs, K.
+
+# R Script
+## Purpose: Calculate SEM and create Figures 2, 3 and S1.
+## Inputs:
+# outputs/exp[1|2|3]_results.rds
+# outputs/exp2_supplementary_results.rds
+# /materials/*.png
+## Outputs:
+# outputs/figures/fig2_multipanel_knowledge.svg
+# outputs/figures/fig3_multipanel_ignorance.svg
+# outputs/figures/figure_S1-stimuli_examples.png"
+## Authors: Peney, T.
+
+# Setup ------------------------------------------------------------------
 library(tidyverse)
 library(here)
 library(ggdist)
@@ -6,13 +25,20 @@ library(magick)
 
 here::i_am("code/figures.R")
 
-# Data Prep --------------------------------------------------------------
+if (!dir.exists(here("outputs/figures"))) {
+  dir.create(here("outputs/figures"))
+}
 
-trial_data <- list()
-trial_data$E1 <- read_rds(here("data/processed/exp1_confirmatory_data.rds"))
-trial_data$E2 <- read_rds(here("data/processed/exp2_confirmatory_data.rds"))
-trial_data$E2s <- read_rds(here("data/processed/exp2_supp_1_data.rds"))
-trial_data$E3 <- read_rds(here("data/processed/exp3_confirmatory_data.rds"))
+# Data Prep --------------------------------------------------------------
+paths <- c(
+  E1 = "outputs/exp1_results.rds",
+  E2 = "outputs/exp2_results.rds",
+  E3 = "outputs/exp3_results.rds"
+)
+trial_data <- map(paths, \(p) read_rds(here(p))$rt_data)
+trial_data$E2s <- read_rds(here(
+  "outputs/exp2_supplementary_results.rds"
+))$S1$rt_data
 
 # Aggregate trial data into one dataframe
 all_trial_data <- list_rbind(trial_data, names_to = "experiment")
@@ -52,9 +78,7 @@ theme_set(
     )
 )
 
-
 # Define Plotting Function -----------------------------------------------
-
 create_plot <- function(trial_data, summary_data) {
   # Base Layer
   ggplot(
@@ -188,7 +212,7 @@ final_k <- plot_grid(top, k_fig, ncol = 1, rel_heights = c(1, 2))
 
 # Export
 ggsave(
-  here("outputs/figures/fig1_multipanel_knowledge.svg"),
+  here("outputs/figures/fig2_multipanel_knowledge.svg"),
   final_k,
   width = 180,
   height = 120,
@@ -206,7 +230,7 @@ ig_fig <- create_plot(
 
 # Top left - Statements
 statements <- tribble(
-  ~block , ~header                   , ~label               , ~text                                     ,
+  ~block , ~header                     , ~label               , ~text                                     ,
        1 , 'Statements (Experiment 2)' , "Knowledge:"         , "Adam KNOWS there are TWO cubes"          ,
        1 , 'Statements (Experiment 2)' , "Belief:"            , "Adam THINKS there are TWO cubes"         ,
        2 , 'Statements (Experiment 3)' , "Negated Knowledge:" , "Adam does NOT KNOW there are TWO cubes"  ,
@@ -267,7 +291,7 @@ top <- plot_grid(text_panel, stimuli_example, nrow = 1, rel_widths = c(1.7, 1))
 final_ig <- plot_grid(top, ig_fig, ncol = 1, rel_heights = c(1, 2))
 
 ggsave(
-  here("outputs/figures/fig2_multipanel_ignorance.svg"),
+  here("outputs/figures/fig3_multipanel_ignorance.svg"),
   final_ig,
   width = 180,
   height = 120,
@@ -279,12 +303,14 @@ panel_names <- c("TB-K-NB", "FB-Ig", "TB-Ig-B", "TB-K-B")
 
 panels <- panel_names |>
   set_names() |>
-  map(\(x) ggdraw() + draw_image(here("materials", paste0(x, ".png")), scale = .95))
+  map(\(x) {
+    ggdraw() + draw_image(here("materials", paste0(x, ".png")), scale = .95)
+  })
 
 stim_examples <- plot_grid(plotlist = panels, labels = "auto", align = "v")
 
 ggsave(
-  here("outputs/figures/stimuli_examples.png"),
+  here("outputs/figures/figure_S1-stimuli_examples.png"),
   stim_examples,
   width = 180,
   height = 120,
