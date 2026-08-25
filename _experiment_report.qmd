@@ -147,3 +147,8 @@ Check that the number of cubes referred to in the statement does not produce a d
 results$S4$rt
 results$S4$ttest |> gt() |> table_formatting()
 ```
+
+# Session Info
+```{r}
+sessionInfo()
+```
