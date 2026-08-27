@@ -10,7 +10,7 @@
 
 # Setup ------------------------------------------------------------------
 library(here)
-here::i_am("code/_main.R")
+here::i_am("_main.R")
 
 # Import and tidy data
 source(here("code/data_import.R"))
