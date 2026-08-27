@@ -5,7 +5,10 @@
 ## Authors: Smith, A., Peney, T., Tidoni, E., O'Connor, R. J., & Riggs, K.
 
 # R Script
-## Purpose: Generate and verify SHA-256 checksums for primary data files.
+## Purpose: Generate and verify SHA-256 checksums for a dataframe.
+### Used in code/data_import.R to check that the dataframe created when re-importing
+### the raw data matches the one used in the original analysis. On a mismatch in an
+### interactive session, the user is prompted to continue or abort.
 ## Authors: Peney, T.
 
 # Setup ------------------------------------------------------------------
@@ -17,74 +20,62 @@ library(digest)
 data_dir <- here("data/primary")
 
 # Functions --------------------------------------------------------------
-build_manifest <- function() {
-  files <- list.files(
-    data_dir,
-    pattern = "_data.csv",
-    recursive = TRUE
-  )
-
-  manifest <- data.frame(
-    file = files,
-    row.names = NULL
-  ) |>
-    rowwise() |>
-    mutate(
-      sha256 = digest::digest(
-        here(data_dir, file),
-        algo = "sha256",
-        file = TRUE
-      ),
-      bytes = file.size(here(data_dir, file))
-    )
+create_checksum <- function(dataframe) {
+  digest::digest(dataframe, algo = "sha256")
 }
 
-checksum_write <- function() {
-  manifest <- build_manifest()
-  write.csv(manifest, here(data_dir, "checksums.csv"), row.names = FALSE)
-}
-
-checksum_verify <- function() {
-  manifest_path <- here(data_dir, "checksums.csv")
-  if (!file.exists(manifest_path)) {
-    stop(
-      "No manifest found at ",
-      manifest_path,
-      "\n  Run checksum_write() to create one.",
-      call. = FALSE
-    )
+checksum_write <- function(dataframe, name) {
+  if (!dir.exists(here("tests/snapshots"))) {
+    dir.create(here("tests/snapshots"), recursive = TRUE)
   }
 
-  old <- read_csv(here(data_dir, "checksums.csv"), col_types = c("ccd"))
-  new <- build_manifest()
+  checksum <- create_checksum(dataframe)
+  write_rds(checksum, here("tests", "snapshots", paste0(name, ".rds")))
+}
 
-  shared <- merge(
-    old[c("file", "sha256")],
-    new[c("file", "sha256")],
-    by = "file",
-    suffixes = c("_old", "_new")
-  )
+checksum_verify <- function(dataframe, name) {
+  path <- here("tests", "snapshots", paste0(name, ".rds"))
 
-  changed <- shared$file[shared$sha256_old != shared$sha256_new]
-
-  result <- rbind(
-    data.frame(file = changed) |>
-      mutate(status = "changed"),
-    data.frame(file = setdiff(old$file, new$file)) |>
-      mutate(status = "missing"),
-    data.frame(file = setdiff(new$file, old$file)) |>
-      mutate(status = "unrecorded")
-  )
-
-  if (nrow(result) > 0L) {
-    stop(
-      "Data integrity check failed.\n",
-      nrow(result),
-      " file(s) differ from the recorded manifest:\n",
-      paste0("  [", result$status, "] ", result$file, collapse = "\n"),
-      call. = FALSE
+  if (!file.exists(path)) {
+    warning(
+      "No snapshot found at ",
+      path,
+      "\n  Run checksum_write() to create one."
     )
+    return()
+  }
+
+  old <- read_rds(path)
+  new <- create_checksum(dataframe)
+
+  checksums_equal <- old == new
+
+  if (checksums_equal) {
+    message("Data validation complete. No issues found.")
   } else {
-    message("All ", nrow(new), " files match the checksum manifest.")
+    warning(
+      "Checksum mismatch: ",
+      name,
+      " differs from the committed reference.\n",
+      "The source data on disk may not be the same as that used to conduct the original analysis.\n",
+      "Consider re-importing using archived versions of the data.",
+      immediate. = TRUE
+    )
+
+    if (!interactive()) {
+      stop("Data validation issues found; aborting (non-interactive session).")
+    } else {
+      if (!confirm_continue()) {
+        stop("Aborting as requested.")
+      }
+    }
   }
+}
+
+confirm_continue <- function(prompt = "Continue anyway?: ") {
+  choice <- utils::menu(
+    c("Continue", "Abort"),
+    title = prompt
+  )
+  return(choice == 1)
 }

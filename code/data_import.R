@@ -21,9 +21,7 @@ library(stringr)
 
 here::i_am("code/data_import.R")
 
-# Data integrity check ---------------------------------------------------
 source(here("code/utils/checksum.R"))
-#checksum_verify()
 
 # Import raw data --------------------------------------------------------
 raw_data <- c("experiment_1", "experiment_2", "experiment_3") |>
@@ -49,6 +47,9 @@ raw_data <- c("experiment_1", "experiment_2", "experiment_3") |>
   ) |>
   set_names(c("E1", "E2", "E3")) |>
   map(bind_rows)
+
+# Data integrity check ---------------------------------------------------
+checksum_verify(raw_data, "raw_data_snapshot")
 
 # Clean Data -------------------------------------------------------------
 clean_data <- raw_data |>
