@@ -16,8 +16,12 @@
 ## Authors: Peney, T.
 
 # Setup ------------------------------------------------------------------
-library(tidyverse)
 library(here)
+library(readr)
+library(purrr)
+library(forcats)
+library(dplyr)
+library(tidyr)
 library(rempsyc)
 library(flextable)
 

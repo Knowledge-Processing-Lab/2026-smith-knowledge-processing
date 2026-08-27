@@ -14,8 +14,9 @@
 ## Authors: Peney, T.
 
 # Setup ------------------------------------------------------------------
-library(tidyverse)
 library(here)
+library(readr)
+library(dplyr)
 library(rstatix)
 
 here::i_am("code/exp2_supplementary_analysis.R")

@@ -11,7 +11,8 @@
 ## Authors: Peney, T.
 
 # Setup ------------------------------------------------------------------
-library(tidyverse)
+library(dplyr)
+library(tidyr)
 
 # Helper Functions -------------------------------------------------------
 create_exclusion_log <- function(

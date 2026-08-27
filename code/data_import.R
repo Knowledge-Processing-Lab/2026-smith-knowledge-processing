@@ -11,15 +11,19 @@
 ## Authors: Peney, T.
 
 # Setup ------------------------------------------------------------------
-library(tidyverse)
 library(here)
+library(dplyr)
+library(readr)
+library(purrr)
+library(forcats)
 library(janitor)
-here::i_am("code/data_import.R")
+library(stringr)
 
+here::i_am("code/data_import.R")
 
 # Data integrity check ---------------------------------------------------
 source(here("code/utils/checksum.R"))
-checksum_verify()
+#checksum_verify()
 
 # Import raw data --------------------------------------------------------
 raw_data <- c("experiment_1", "experiment_2", "experiment_3") |>

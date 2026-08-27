@@ -9,8 +9,9 @@
 ## Authors: Peney, T.
 
 # Setup ------------------------------------------------------------------
-library(tidyverse)
 library(here)
+library(readr)
+library(dplyr)
 library(digest)
 
 data_dir <- here("data/primary")

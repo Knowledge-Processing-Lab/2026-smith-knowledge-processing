@@ -28,8 +28,8 @@ execute:
 ---
 
 ```{r}
-library(tidyverse)
 library(here)
+library(readr)
 library(gt)
 
 here::i_am("_experiment_report.qmd")

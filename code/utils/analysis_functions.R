@@ -9,7 +9,8 @@
 ## Authors: Peney, T.
 
 # Setup ------------------------------------------------------------------
-library(tidyverse)
+library(dplyr)
+library(rstatix)
 
 # Function Definitions ---------------------------------------------------
 aggregate_mean <- function(data, measure, stat_func = mean, .by = p_id) {

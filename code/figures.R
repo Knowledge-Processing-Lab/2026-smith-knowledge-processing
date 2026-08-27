@@ -17,8 +17,12 @@
 ## Authors: Peney, T.
 
 # Setup ------------------------------------------------------------------
-library(tidyverse)
 library(here)
+library(readr)
+library(purrr)
+library(dplyr)
+library(forcats)
+library(ggplot2)
 library(ggdist)
 library(cowplot)
 library(magick)
