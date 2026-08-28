@@ -18,20 +18,34 @@ Authors: *Alex Smith¹, Emmanuele Tidoni¹ ², Tom Peney¹, Richard J O’Connor
 
 ### Setup Instructions
 
-Primary data is included under `data/`. If for whatever reason the checksum warning flags that a data validation error has occurred, data can be redownloaded from the Zenodo archive. [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22025765.svg)](https://doi.org/10.5281/zenodo.22025765)
+Primary data is included under `data/primary`. If for whatever reason the checksum warning flags that a data validation error has occurred, data can be redownloaded from the Zenodo archive. [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22025765.svg)](https://doi.org/10.5281/zenodo.22025765)
 
-1. Clone the repository:
+1. Clone the repository (or download the `.zip` and extract it):
 
    ```powershell
-   git clone https://github.com/Knowledge-Processing-Lab/2026-smith-knowledge-processing.git
-   cd 2026-smith-knowledge-processing
+   git clone https://github.com/Knowledge-Processing-Lab/2026-smith-knowledge-and-ignorance.git
+   cd 2026-smith-knowledge-and-ignorance
    ```
 
-2. Restore the project library and install R dependencies:
+2. *Optional:* If your IDE uses projects (e.g., RStudio), open the new directory as a project before continuing.
+
+3. Install `renv`, if you have not done so already.
+
+   ```R
+   install.packages("renv")
+   ```
+
+4. Restore the project library and install R dependencies:
 
    ```R
    renv::restore()
    ```
+
+**Notes**
+
+* You may be prompted to activate the project first. Once activated, re-run `renv::restore()` to begin package installation.
+
+* If any packages fail to build, you may need [RTools](https://cran.r-project.org/bin/windows/Rtools/) (Windows only).
 
 ## Instructions for reproducing the analysis
 
@@ -39,7 +53,7 @@ Once the environment has been setup, run `_main.R`. This will run each analysis 
 
 A printed report `_experiment_report.html` will be created for simplified viewing of the results. Opening the file should display the report in your default web browser. 
 
-* To avoid using Quarto, you can run each script manually and print the `results` object to the console. 
+* To avoid using Quarto, you can run each script in `/code` manually and print the `results` object to the console. 
 
 Figures and tables are created under `outputs/figures` and `outputs/tables` respectively. 
 
